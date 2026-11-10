@@ -1,0 +1,5534 @@
+/*
+ * Author       : sanjay.s.2024.cse_rajalak406
+ * Generated on : 10-Nov-2026 20:35:14
+ * Version      : 1.0
+ */
+ application "Patient Appointment Management System"
+ {
+ 	date format = "dd-MMM-yyyy"
+ 	time zone = "America/Los_Angeles"
+ 	time format = "24-hr"
+
+ 	forms
+	{
+		form accompanying_family_member
+		{
+			displayname = "Accompanying Family Member"
+			success message = "Accompanying Family Member Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			appointment
+			(
+				type = list	
+				displayname = "Appointment"
+				values  = appointment_booking.ID
+    			displayformat = [appointment_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			member_name
+			(
+    			type = name
+				displayname = "Member Name"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+	     			 visibility = false
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			relation
+			(
+    			type = text
+				displayname = "Relation"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			age
+			(
+				type = number
+				displayname = "Age"
+				maxchar = 19
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form appointment_booking
+		{
+			displayname = "Appointment Booking"
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			patient
+			(
+				type = list	
+				displayname = "Patient"
+				values  = patient_profile.ID
+    			displayformat = [patient_name.first_name]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			preferred_appointment_date
+			(
+    			type = date
+				displayname = "Preferred Appointment Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			preferred_appointment_time
+			(
+    			type = time
+				displayname = "Preferred Appointment Time"
+				timedisplayoptions = "hh:mm:ss" 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			department
+			(
+				type = picklist
+				displayname = "Department"
+				values = {"Neurology","Pediatrics","Orthopedics","General Medicine","ENT","Cardiology"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			appointment_id
+			(
+    			type = autonumber
+				displayname = "Appointment ID"
+				start index = 1
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			appointment_submitted_on
+			(
+    			type = datetime
+				displayname = "Appointment Submitted On"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			appointment_status
+			(
+				type = picklist
+				displayname = "Appointment Status"
+				values = {"Requested","Checked-In","Consulted","Pending Doctor Approval","Confirmed","Cancelled"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			payment_status
+			(
+				type = picklist
+				displayname = "Payment Status"
+				values = {"Failed","Paid","Pending"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			net_payable_fee
+			(
+				displayname = "Net Payable Fee"
+				type = USD
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			consultation_fee
+			(
+				displayname = "Consultation Fee"
+				type = USD
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			insurance_coverage_percent
+			(
+    			type = percentage
+				displayname = "Insurance Coverage Percent"
+				maxchar = 16
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			requires_ambulance_pickup
+			(
+    			type = checkbox
+				displayname = "Requires Ambulance Pickup"
+				initial value = false
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			doctor
+			(
+				type = list	
+				displayname = "Doctor"
+				values  = doctor_master.ID
+    			displayformat = [doctor_name.first_name]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			check_in_status
+			(
+				type = radiobuttons
+				displayname = "Check-In Status"
+				values = {"Checked In","Not Checked In"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			consultation_status
+			(
+				type = radiobuttons
+				displayname = "Consultation Status"
+				values = {"Consulted","Not Consulted"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			previous_report_portal_url
+			(
+    			type = url
+				displayname = "Previous Report Portal URL"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			previous_medical_report_upload
+			(
+    			type = textarea
+				displayname = "Previous Medical Report Upload"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			symptom_voice_note
+			(
+    			type = textarea
+				displayname = "Symptom Voice Note"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			symptom_video
+			(
+    			type = textarea
+				displayname = "Symptom Video"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			patient_photo
+			(
+    			type = textarea
+				displayname = "Patient Photo"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			patient_digital_signature
+			(
+    			type = textarea
+				displayname = "Patient Digital Signature"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			appointment_qr_code
+			(
+    			type = textarea
+				displayname = "Appointment QR Code"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			clinic_guidelines_display
+			(
+    			type = textarea
+				displayname = "Clinic Guidelines Display"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			body_temperature_f
+			(
+				type = decimal
+				displayname = "Body Temperature F"
+				maxchar = 16
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+			blueprint components
+			{
+				stages = {"Appointment Draft","Appointment Submitted","Pending Doctor Approval","Appointment Cancelled","Appointment Approved","Appointment Rejected","Appointment Rescheduled","Payment Pending","Payment Confirmed","Appointment Scheduled","Patient Checked In","Consultation In Progress","Consultation Completed","Appointment Closed"}
+			}
+		}
+		form approval_request
+		{
+			displayname = "Approval Request"
+			success message = "Approval Request Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			appointment
+			(
+				type = list	
+				displayname = "Appointment"
+				values  = appointment_booking.ID
+    			displayformat = [appointment_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			approver
+			(
+				type = list	
+				displayname = "Approver"
+				values  = doctor_master.ID
+    			displayformat = [doctor_name.first_name]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			approval_status
+			(
+				type = picklist
+				displayname = "Approval Status"
+				values = {"Approved","Rejected","Pending"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			approval_comment
+			(
+    			type = textarea
+				displayname = "Approval Comment"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			approved_on
+			(
+    			type = datetime
+				displayname = "Approved On"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form clinic_guidelines_snippet
+		{
+			displayname = "Clinic Guidelines Snippet"
+			success message = "Clinic Guidelines Snippet Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			guideline_text
+			(
+    			type = textarea
+				displayname = "Guideline Text"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			last_updated
+			(
+    			type = datetime
+				displayname = "Last Updated"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			version
+			(
+    			type = text
+				displayname = "Version"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form daily_target_log
+		{
+			displayname = "Daily Target Log"
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			date_1
+			(
+    			type = date
+				displayname = "Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			actual_count
+			(
+				type = number
+				displayname = "Actual Count"
+				maxchar = 19
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			capacity_percentage
+			(
+    			type = percentage
+				displayname = "Capacity Percentage"
+				maxchar = 16
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form department_load_chart
+		{
+			displayname = "Department Load Chart"
+			success message = "Department Load Chart Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			department
+			(
+				type = picklist
+				displayname = "Department"
+				values = {"Neurology","Pediatrics","Orthopedics","General Medicine","ENT","Cardiology"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			date_1
+			(
+    			type = date
+				displayname = "Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form doctor_availability_log
+		{
+			displayname = "Doctor Availability Log"
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			doctor
+			(
+				type = list	
+				displayname = "Doctor"
+				values  = doctor_master.ID
+    			displayformat = [doctor_name.first_name]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			date_1
+			(
+    			type = date
+				displayname = "Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			time_slot
+			(
+    			type = text
+				displayname = "Time Slot"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			is_available
+			(
+    			type = checkbox
+				displayname = "Is Available"
+				initial value = false
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			current_queue_count
+			(
+				type = number
+				displayname = "Current Queue Count"
+				maxchar = 19
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form doctor_master
+		{
+			displayname = "Doctor Master"
+			success message = "Doctor Master Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			doctor_name
+			(
+    			type = name
+				displayname = "Doctor Name"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+	     			 visibility = false
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			specialization
+			(
+    			type = text
+				displayname = "Specialization"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			available_slots
+			(
+    			type = textarea
+				displayname = "Available Slots"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			department
+			(
+				type = picklist
+				displayname = "Department"
+				values = {"Neurology","Pediatrics","Orthopedics","General Medicine","ENT","Cardiology"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form follow_up_reminder
+		{
+			displayname = "Follow Up Reminder"
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			patient
+			(
+				type = list	
+				displayname = "Patient"
+				values  = patient_profile.ID
+    			displayformat = [patient_name.first_name]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			reminder_sent_on
+			(
+    			type = datetime
+				displayname = "Reminder Sent On"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			follow_up_window_end
+			(
+    			type = date
+				displayname = "Follow Up Window End"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			reminder_type
+			(
+				type = picklist
+				displayname = "Reminder Type"
+				values = {"Weekly","Batch","Manual"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form medical_report_viewer
+		{
+			displayname = "Medical Report Viewer"
+			success message = "Medical Report Viewer Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			appointment
+			(
+				type = list	
+				displayname = "Appointment"
+				values  = appointment_booking.ID
+    			displayformat = [appointment_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			report_file_name
+			(
+    			type = text
+				displayname = "Report File Name"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			report_upload_date
+			(
+    			type = datetime
+				displayname = "Report Upload Date"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			report_type
+			(
+				type = picklist
+				displayname = "Report Type"
+				values = {"Lab Report","Prescription","Previous History"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form patient_profile
+		{
+			displayname = "Patient Profile"
+			success message = "Patient Profile Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			patient_name
+			(
+    			type = name
+				displayname = "Patient Name"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+	     			 visibility = false
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			email_address
+			(
+    			type = email
+				displayname = "Email Address"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			contact_number
+			(
+    			type = phonenumber
+				displayname = "Contact Number"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			residential_address
+			(
+    			type = address
+				displayname = "Residential Address"
+     			capture_coordinates = true
+     			adjust_using_map = false
+     			address_line_1
+     			(
+	     			  type = address_line_1
+	     			  displayname = "Address Line 1"
+     			) 
+     			address_line_2
+     			(
+	     			  type = address_line_2
+	     			  displayname = "Address Line 2"
+	     			 visibility = false
+     			) 
+     			district_city
+     			(
+	     			  type = district_city
+	     			  displayname = "City / District"
+	     			 visibility = false
+     			) 
+     			state_province
+     			(
+	     			  type = state_province
+	     			  displayname = "State / Province"
+	     			 visibility = false
+     			) 
+     			postal_Code
+     			(
+	     			  type = postal_Code
+	     			  displayname = "Postal Code"
+	     			 visibility = false
+     			) 
+     			country
+     			(
+	     			  type = country
+	     			  displayname = "Country"
+	     			 visibility = false
+     			) 
+     			latitude
+     			(
+	     			  type = latitude
+	     			  displayname = "Latitude"
+	     			 visibility = false
+     			) 
+     			longitude
+     			(
+	     			  type = longitude
+	     			  displayname = "Longitude"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			age
+			(
+				type = number
+				displayname = "Age"
+				maxchar = 19
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			gender
+			(
+				type = picklist
+				displayname = "Gender"
+				values = {"Male","Female","Other"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			referred_by
+			(
+    			type = text
+				displayname = "Referred By"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			existing_conditions
+			(
+				type = list	
+				displayname = "Existing Conditions"
+				values = {"Hypertension","Allergy to Penicillin","Diabetes","Heart Disease","Other"}
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			symptoms_description
+			(
+    			type = textarea
+				displayname = "Symptoms Description"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			consent_for_treatment
+			(
+    			type = checkbox
+				displayname = "Consent For Treatment"
+				initial value = false
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form patient_residential_map
+		{
+			displayname = "Patient Residential Map"
+			success message = "Data Added Successfully!"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			patient
+			(
+				type = list	
+				displayname = "Patient"
+				values  = patient_profile.ID
+    			displayformat = [patient_name.first_name]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			residential_address
+			(
+    			type = address
+				displayname = "Residential Address"
+     			capture_coordinates = true
+     			adjust_using_map = false
+     			address_line_1
+     			(
+	     			  type = address_line_1
+	     			  displayname = "Address Line 1"
+     			) 
+     			address_line_2
+     			(
+	     			  type = address_line_2
+	     			  displayname = "Address Line 2"
+	     			 visibility = false
+     			) 
+     			district_city
+     			(
+	     			  type = district_city
+	     			  displayname = "City / District"
+	     			 visibility = false
+     			) 
+     			state_province
+     			(
+	     			  type = state_province
+	     			  displayname = "State / Province"
+	     			 visibility = false
+     			) 
+     			postal_Code
+     			(
+	     			  type = postal_Code
+	     			  displayname = "Postal Code"
+	     			 visibility = false
+     			) 
+     			country
+     			(
+	     			  type = country
+	     			  displayname = "Country"
+	     			 visibility = false
+     			) 
+     			latitude
+     			(
+	     			  type = latitude
+	     			  displayname = "Latitude"
+	     			 visibility = false
+     			) 
+     			longitude
+     			(
+	     			  type = longitude
+	     			  displayname = "Longitude"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			department
+			(
+				type = picklist
+				displayname = "Department"
+				values = {"Neurology","Pediatrics","Orthopedics","General Medicine","ENT","Cardiology"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form payment_transaction
+		{
+			displayname = "Payment Transaction"
+			success message = "Payment Transaction Added Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			appointment
+			(
+				type = list	
+				displayname = "Appointment"
+				values  = appointment_booking.ID
+    			displayformat = [appointment_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			transaction_reference
+			(
+    			type = text
+				displayname = "Transaction Reference"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			payment_gateway_status
+			(
+				type = picklist
+				displayname = "Payment Gateway Status"
+				values = {"Failed","Retry","Success"}
+				others option = true
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			retry_count
+			(
+				type = number
+				displayname = "Retry Count"
+				maxchar = 19
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			transaction_date
+			(
+    			type = datetime
+				displayname = "Transaction Date"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		form visit_summary_log
+		{
+			displayname = "Visit Summary Log"
+			success message = "Summary Log Visited Successfully"
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			appointment
+			(
+				type = list	
+				displayname = "Appointment"
+				values  = appointment_booking.ID
+    			displayformat = [appointment_id]
+				allow new entries
+				[
+					displayname = "Add New"
+				]
+				sortorder = ascending
+				height = 13px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			summary_generated_on
+			(
+    			type = datetime
+				displayname = "Summary Generated On"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			summary_content
+			(
+    			type = textarea
+				displayname = "Summary Content"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			sent_to_patient
+			(
+    			type = checkbox
+				displayname = "Sent To Patient"
+				initial value = false
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+	}
+	reports
+	{
+		list appointment_booking_Report
+		{
+			displayName = "Appointment Booking Report"
+			show all rows from appointment_booking    
+			(
+				patient as "Patient"
+				preferred_appointment_date as "Preferred Appointment Date"
+				preferred_appointment_time as "Preferred Appointment Time"
+				department as "Department"
+				appointment_id as "Appointment ID"
+				appointment_submitted_on as "Appointment Submitted On"
+				appointment_status as "Appointment Status"
+				payment_status as "Payment Status"
+				net_payable_fee as "Net Payable Fee"
+				(
+					display = total,average,min,max	
+				)
+				consultation_fee as "Consultation Fee"
+				(
+					display = total,average,min,max	
+				)
+				insurance_coverage_percent as "Insurance Coverage Percent"
+				(
+					display = total,average,min,max	
+				)
+				requires_ambulance_pickup as "Requires Ambulance Pickup"
+				doctor as "Doctor"
+				check_in_status as "Check-In Status"
+				consultation_status as "Consultation Status"
+				previous_report_portal_url as "Previous Report Portal URL"
+				previous_medical_report_upload as "Previous Medical Report Upload"
+				symptom_voice_note as "Symptom Voice Note"
+				symptom_video as "Symptom Video"
+				patient_photo as "Patient Photo"
+				patient_digital_signature as "Patient Digital Signature"
+				appointment_qr_code as "Appointment QR Code"
+				clinic_guidelines_display as "Clinic Guidelines Display"
+				body_temperature_f as "Body Temperature F"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (payment_status == "Failed")
+				fields = [payment_status]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (payment_status == "Paid")
+				fields = [payment_status]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+				"New Formatting3"
+				{
+				condition = (payment_status == "Pending")
+				fields = [payment_status]
+				format = "color:#ffffff;background-color:#e84c3d;"
+				}
+			)
+		}
+		kanban appointment_booking_by_department
+		{
+			displayName = "Departments"
+			show all rows from appointment_booking    
+			(
+				patient as "Patient"
+				preferred_appointment_date as "Preferred Appointment Date"
+				preferred_appointment_time as "Preferred Appointment Time"
+				department as "Department"
+				appointment_id as "Appointment ID"
+				appointment_submitted_on as "Appointment Submitted On"
+				appointment_status as "Appointment Status"
+				payment_status as "Payment Status"
+				net_payable_fee as "Net Payable Fee"
+				(
+					display = total,average,min,max	
+				)
+				consultation_fee as "Consultation Fee"
+				(
+					display = total,average,min,max	
+				)
+				insurance_coverage_percent as "Insurance Coverage Percent"
+				(
+					display = total,average,min,max	
+				)
+				requires_ambulance_pickup as "Requires Ambulance Pickup"
+				doctor as "Doctor"
+				check_in_status as "Check-In Status"
+				consultation_status as "Consultation Status"
+				previous_report_portal_url as "Previous Report Portal URL"
+				previous_medical_report_upload as "Previous Medical Report Upload"
+				symptom_voice_note as "Symptom Voice Note"
+				symptom_video as "Symptom Video"
+				patient_photo as "Patient Photo"
+				patient_digital_signature as "Patient Digital Signature"
+				appointment_qr_code as "Appointment QR Code"
+				clinic_guidelines_display as "Clinic Guidelines Display"
+				body_temperature_f as "Body Temperature F"
+			)
+			options
+			(
+	 			display field = department
+	 		)
+		}
+		list approval_request_Report
+		{
+			displayName = "All Approval Requests"
+			show all rows from approval_request    
+			(
+				appointment as "Appointment"
+				approver as "Approver"
+				approval_status as "Approval Status"
+				approval_comment as "Approval Comment"
+				approved_on as "Approved On"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (approval_status == "Approved")
+				fields = [approval_status]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (approval_status == "Pending")
+				fields = [approval_status]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+				"New Formatting3"
+				{
+				condition = (approval_status == "Rejected")
+				fields = [approval_status]
+				format = "color:#ffffff;background-color:#e84c3d;"
+				}
+			)
+		}
+		kanban approval_request_by_approval_status
+		{
+			displayName = "Approval Statuses"
+			show all rows from approval_request    
+			(
+				appointment as "Appointment"
+				approver as "Approver"
+				approval_status as "Approval Status"
+				approval_comment as "Approval Comment"
+				approved_on as "Approved On"
+			)
+			options
+			(
+	 			display field = approval_status
+	 		)
+		}
+		list accompanying_family_member_Report
+		{
+			displayName = "All Accompanying Family Members"
+			show all rows from accompanying_family_member    
+			(
+				appointment as "Appointment"
+				member_name  as "Member Name"
+				relation as "Relation"
+				age as "Age"
+			)
+		}
+		list payment_transaction_Report
+		{
+			displayName = "All Payment Transactions"
+			show all rows from payment_transaction    
+			(
+				appointment as "Appointment"
+				transaction_reference as "Transaction Reference"
+				payment_gateway_status as "Payment Gateway Status"
+				retry_count as "Retry Count"
+				transaction_date as "Transaction Date"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (payment_gateway_status == "Failed")
+				fields = [payment_gateway_status]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (payment_gateway_status == "Retry")
+				fields = [payment_gateway_status]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+				"New Formatting3"
+				{
+				condition = (payment_gateway_status == "Success")
+				fields = [payment_gateway_status]
+				format = "color:#ffffff;background-color:#e84c3d;"
+				}
+			)
+		}
+		kanban payment_transaction_by_payment_gateway_status
+		{
+			displayName = "Payment Gateway Statuses"
+			show all rows from payment_transaction    
+			(
+				appointment as "Appointment"
+				transaction_reference as "Transaction Reference"
+				payment_gateway_status as "Payment Gateway Status"
+				retry_count as "Retry Count"
+				transaction_date as "Transaction Date"
+			)
+			options
+			(
+	 			display field = payment_gateway_status
+	 		)
+		}
+		list follow_up_reminder_Report
+		{
+			displayName = "Follow Up Reminder Report"
+			show all rows from follow_up_reminder    
+			(
+				patient as "Patient"
+				reminder_sent_on as "Reminder Sent On"
+				follow_up_window_end as "Follow Up Window End"
+				reminder_type as "Reminder Type"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (reminder_type == "Batch")
+				fields = [reminder_type]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (reminder_type == "Manual")
+				fields = [reminder_type]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+			)
+		}
+		kanban follow_up_reminder_by_reminder_type
+		{
+			displayName = "Reminder Types"
+			show all rows from follow_up_reminder    
+			(
+				patient as "Patient"
+				reminder_sent_on as "Reminder Sent On"
+				follow_up_window_end as "Follow Up Window End"
+				reminder_type as "Reminder Type"
+			)
+			options
+			(
+	 			display field = reminder_type
+	 		)
+		}
+		list patient_residential_map_Report
+		{
+			displayName = "Patient Residential Map Report"
+			show all rows from patient_residential_map    
+			(
+				patient as "Patient"
+				residential_address  as "Residential Address"
+	 			(
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+				department as "Department"
+			)
+		}
+		kanban patient_residential_map_by_department
+		{
+			displayName = "Departments"
+			show all rows from patient_residential_map    
+			(
+				patient as "Patient"
+				residential_address  as "Residential Address"
+	 			(
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+				department as "Department"
+			)
+			options
+			(
+	 			display field = department
+	 		)
+		}
+		list visit_summary_log_Report
+		{
+			displayName = "All Summary Logs"
+			show all rows from visit_summary_log    
+			(
+				appointment as "Appointment"
+				summary_generated_on as "Summary Generated On"
+				summary_content as "Summary Content"
+				sent_to_patient as "Sent To Patient"
+			)
+		}
+		list doctor_master_Report
+		{
+			displayName = "All Doctor Masters"
+			show all rows from doctor_master    
+			(
+				doctor_name  as "Doctor Name"
+				specialization as "Specialization"
+				available_slots as "Available Slots"
+				department as "Department"
+			)
+		}
+		kanban doctor_master_by_department
+		{
+			displayName = "Departments"
+			show all rows from doctor_master    
+			(
+				doctor_name  as "Doctor Name"
+				specialization as "Specialization"
+				available_slots as "Available Slots"
+				department as "Department"
+			)
+			options
+			(
+	 			display field = department
+	 		)
+		}
+		list patient_profile_Report
+		{
+			displayName = "All Patient Profiles"
+			show all rows from patient_profile    
+			(
+				patient_name  as "Patient Name"
+				email_address as "Email Address"
+				contact_number as "Contact Number"
+				residential_address  as "Residential Address"
+	 			(
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+				age as "Age"
+				gender as "Gender"
+				referred_by as "Referred By"
+				existing_conditions as "Existing Conditions"
+				symptoms_description as "Symptoms Description"
+				consent_for_treatment as "Consent For Treatment"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (gender == "Other")
+				fields = [gender]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+			)
+		}
+		kanban patient_profile_by_gender
+		{
+			displayName = "Genders"
+			show all rows from patient_profile    
+			(
+				patient_name  as "Patient Name"
+				email_address as "Email Address"
+				contact_number as "Contact Number"
+				residential_address  as "Residential Address"
+	 			(
+	      			enable = Link_to_Map,Show_As_Text
+	 			)
+				age as "Age"
+				gender as "Gender"
+				referred_by as "Referred By"
+				existing_conditions as "Existing Conditions"
+				symptoms_description as "Symptoms Description"
+				consent_for_treatment as "Consent For Treatment"
+			)
+			options
+			(
+	 			display field = gender
+	 		)
+		}
+		list department_load_chart_Report
+		{
+			displayName = "All Department Load Charts"
+			show all rows from department_load_chart    
+			(
+				department as "Department"
+				date_1 as "Date"
+			)
+		}
+		kanban department_load_chart_by_department
+		{
+			displayName = "Departments"
+			show all rows from department_load_chart    
+			(
+				department as "Department"
+				date_1 as "Date"
+			)
+			options
+			(
+	 			display field = department
+	 		)
+		}
+		list daily_target_log_Report
+		{
+			displayName = "Daily Target Log Report"
+			show all rows from daily_target_log    
+			(
+				date_1 as "Date"
+				actual_count as "Actual Count"
+				capacity_percentage as "Capacity Percentage"
+				(
+					display = total,average,min,max	
+				)
+			)
+		}
+		list doctor_availability_log_Report
+		{
+			displayName = "Doctor Availability Log Report"
+			show all rows from doctor_availability_log    
+			(
+				doctor as "Doctor"
+				date_1 as "Date"
+				time_slot as "Time Slot"
+				is_available as "Is Available"
+				current_queue_count as "Current Queue Count"
+			)
+		}
+		list clinic_guidelines_snippet_Report
+		{
+			displayName = "All Clinic Guidelines Snippets"
+			show all rows from clinic_guidelines_snippet    
+			(
+				guideline_text as "Guideline Text"
+				last_updated as "Last Updated"
+				version as "Version"
+			)
+		}
+		list medical_report_viewer_Report
+		{
+			displayName = "All Medical Report Viewers"
+			show all rows from medical_report_viewer    
+			(
+				appointment as "Appointment"
+				report_file_name as "Report File Name"
+				report_upload_date as "Report Upload Date"
+				report_type as "Report Type"
+			)
+			conditional formatting
+			(
+				"New Formatting1"
+				{
+				condition = (report_type == "Lab Report")
+				fields = [report_type]
+				format = "color:#ffffff;background-color:#765f89;"
+				}
+				"New Formatting2"
+				{
+				condition = (report_type == "Prescription")
+				fields = [report_type]
+				format = "color:#000000;background-color:#1bbc9b;"
+				}
+				"New Formatting3"
+				{
+				condition = (report_type == "Previous History")
+				fields = [report_type]
+				format = "color:#ffffff;background-color:#e84c3d;"
+				}
+			)
+		}
+		kanban medical_report_viewer_by_report_type
+		{
+			displayName = "Report Types"
+			show all rows from medical_report_viewer    
+			(
+				appointment as "Appointment"
+				report_file_name as "Report File Name"
+				report_upload_date as "Report Upload Date"
+				report_type as "Report Type"
+			)
+			options
+			(
+	 			display field = report_type
+	 		)
+		}
+	}
+	pages
+	{
+		page DashBoard
+		{
+			displayname = "Dashboard"
+			Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\n\t\t\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width='28%'\n   \t>\n\t<panel elementName='Panel 1'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = '#FFFFFF'\n\tbgColor = 'theme'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'sport-basketball-13'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\tdisplayType = 'actual'\n\tdecimalPlaces = '2'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.appointment_booking.net_payable_fee.sum'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Total Net Payable Fee'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='25%'\n   \t>\n\t<panel elementName='Panel 2'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = '#FFFFFF'\n\tbgColor = 'theme'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'shopping-cash-register'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\tdisplayType = 'actual'\n\tdecimalPlaces = '2'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.appointment_booking.consultation_fee.sum'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Total Consultation Fees'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='24%'\n   \t>\n\t<panel elementName='Panel 3'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = '#FFFFFF'\n\tbgColor = 'theme'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'business-percentage-39'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\tdisplayType = 'actual'\n\tdecimalPlaces = '2'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.appointment_booking.insurance_coverage_percent.avg'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Average Insurance Coverage Percents'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='23%'\n   \t>\n\t<panel elementName='Panel 4'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = '#FFFFFF'\n\tbgColor = 'theme'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'clothes-wash'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\tdisplayType = 'actual'\n\tdecimalPlaces = '2'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'thisapp.appointment_booking.body_temperature_f.avg'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Average of Body Temperature F'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='40%'\n   \t>\n\t<chart \n\telementName='Chart 1'\n\n\t\n\ttitle = 'Consultation Status by Net Payable Fee'\n\t\n\ttype = 'Stacked Column'\n\txtitle = 'Consultation Status'\n\tytitle = 'Net Payable Fee'\n\tbgColor = '#FFFFFF'\n\ttheme = 'theme'\n\tlegendPos = 'center.top'\n\theightType = 'auto'\n\theightValue = '300px'\n\tappLinkName = 'thisapp'\n\tformLinkName = 'appointment_booking'\n\txfield = 'consultation_status'\n\tyfields = 'sum:net_payable_fee'\n\tgroupBy = 'check_in_status'\n\t\tDelugeCriteria = 'consultation_status is not null &amp;&amp; consultation_status != &quot;&quot;'\n/>\n\n</column><column\n   \t\t width='35%'\n   \t>\n\t<panel elementName='Grouped_Panel 1'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='50px'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '20px'\n\tmarginRight = '20px' \n\tcolor = '#000000'\n\tsize = '16px'\n\ttype = 'Text'\n\n\n\n\n\n\n\n\t  value = 'Payment Status'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '17px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n    borderColor = '#444444'\n    borderWidth = '0px'\n\t\twidth = '50%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '2px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'design-2-cursor-not-allowed'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n\n\t\tcriteria = 'payment_status == &quot;Failed&quot;'\n\t  value = 'thisapp.appointment_booking.payment_status.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Failed'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\tpaddingTop = '17px'\n\tpaddingLeft = '0px'\n\tpaddingRight = '17px'\n\tpaddingBottom = '17px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '50%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'business-payment'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n\n\t\tcriteria = 'payment_status == &quot;Paid&quot;'\n\t  value = 'thisapp.appointment_booking.payment_status.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Paid'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '17px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n    borderColor = '#444444'\n    borderWidth = '0px'\n\t\twidth = '50%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n    \tcornerRadius = '2px'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'ui-2-hourglass'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n\n\t\tcriteria = 'payment_status == &quot;Pending&quot;'\n\t  value = 'thisapp.appointment_booking.payment_status.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Pending'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc><pc \n\t\tpaddingTop = '17px'\n\tpaddingLeft = '0px'\n\tpaddingRight = '17px'\n\tpaddingBottom = '17px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '50%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\tvAlign = 'middle'\n>\n\t<image  \n\t\tmarginLeft = '0px'\n\tmarginRight = '7px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '50px'\n\theight = '50px'\n\ttype = 'icon'\n\tvalue = 'location-appointment'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmargin = '0px'\n\tcolor = 'theme'\n\tsize = '20px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\n\n\t  value = 'thisapp.appointment_booking.payment_status.count'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '0px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '3px'\n\tcolor = '#44404C'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Total'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column><column\n   \t\t width='25%'\n   \t>\n\t<panel elementName='Panel_Button 1'\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='50px'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginLeft = '20px'\n\tmarginRight = '20px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tcolor = '#2D2D2D'\n\tsize = '16px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\n\n\n\n\n\n\t  value = 'Quick Links'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpaddingTop = '0px'\n\tpaddingLeft = '10px'\n\tpaddingRight = '10px'\n\tpaddingBottom = '10px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'left'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\tpadding = '5px'\n\n\t\thAlign = 'left'\n>\n\t<pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginLeft = '5px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '40px'\n\theight = '40px'\n\ttype = 'icon'\n\tvalue = 'ui-2-square-add-08'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n\t\thAlign = 'left'\n>\n\t<text \n    action = 'OpenForm'\n\t\tcomponentLinkName = 'appointment_booking'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '12px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'Add New Appointment Booking'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\tpadding = '8px'\n\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginLeft = '5px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '40px'\n\theight = '40px'\n\ttype = 'icon'\n\tvalue = 'ui-2-square-add-08'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n\t\thAlign = 'left'\n>\n\t<text \n    action = 'OpenForm'\n\t\tcomponentLinkName = 'approval_request'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '12px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'Add New Approval Request'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\tpadding = '8px'\n\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginLeft = '5px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '40px'\n\theight = '40px'\n\ttype = 'icon'\n\tvalue = 'ui-2-square-add-08'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n\t\thAlign = 'left'\n>\n\t<text \n    action = 'OpenForm'\n\t\tcomponentLinkName = 'accompanying_family_member'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '12px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'Add New Accompanying Family Member'\n>\n</text>\n\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\tpadding = '8px'\n\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t\n</pc>\n</pr>\n</pc>\n</pr><pr \n\t>\n\t<pc \n\t\n>\n\t<image  \n\t\tmarginLeft = '5px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\n\tcolor = 'theme'\n\tbgColor = '#F1F2F4'\n\twidth = '40px'\n\theight = '40px'\n\ttype = 'icon'\n\tvalue = 'ui-2-square-add-08'\n\tsize = '16px'\n\tcornerRadius = '10px'\n\ticonType = 'outline'\n/>\n</pc><pc \n\t\n\t\thAlign = 'left'\n>\n\t<text \n    action = 'OpenForm'\n\t\tcomponentLinkName = 'payment_transaction'\n\t\ttarget = 'new-window'\n\n\tmarginLeft = '12px'\n\tmarginRight = '0px' \n\tmarginBottom = '0px'\n\tmarginTop = '0px'\n\tpadding = '0px'\n\tcolor = 'theme'\n\tsize = '15px'\n\ttype = 'Text'\n\n\tbgColor = 'transparent'\n        bgColorType = 'noFill'\n\tcornerRadius = '2px'\n\n\n\n\n\n    borderColor = '#5051F9'\n    borderWidth = '0px'\n\n\t  value = 'Add New Payment Transaction'\n>\n</text>\n\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</pc>\n</pr>\n</panel>\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<chart \n\telementName='Chart 2'\n\n\t\n\ttitle = 'Consultation Fee by Net Payable Fee'\n\t\n\ttype = 'Scatter'\n\txtitle = 'Consultation Fee'\n\tytitle = 'Net Payable Fee'\n\tbgColor = '#FFFFFF'\n\ttheme = 'theme'\n\tlegendPos = 'none'\n\theightType = 'auto'\n\theightValue = '300px'\n\tappLinkName = 'thisapp'\n\tformLinkName = 'appointment_booking'\n\txfield = 'consultation_fee'\n\tyfields = 'value:net_payable_fee'\n\tgroupBy = 'patient'\n\t\tDelugeCriteria = 'consultation_fee is not null'\n/>\n\n</column>\n</row><row>\n\t<column\n   \t\t width='100%'\n   \t>\n\t<report \n\telementName='Report'\n\n\t\tappLinkName = 'thisapp'\n\t\tlinkName = 'appointment_booking_Report'\n\t\n\t\tiszreport = 'false'\n\theightType = 'auto'\n\theightValue = '700'\n/>\n</column>\n</row>\n</layout>\n</zml>"
+		}
+	}
+
+
+
+
+		workflow
+		{
+		form
+		{
+			auto_set_appointment_id as "Auto-Set Appointment ID"
+			{
+				type =  form
+				form = appointment_booking
+
+				record event = on add
+
+				on load
+				{
+					actions 
+					{
+						custom deluge script
+						(
+											// The appointment_id is an autonumber field and cannot be manually set.
+										// It is automatically generated by Zoho Creator upon record creation.
+										// No code is needed to populate this field.
+										info "Appointment ID is auto-generated by the system. No manual assignment required.";
+						)
+					}
+				}
+
+			}
+		}
+
+		schedule
+		{
+			weekly_follow_up_reminder as "Weekly Follow-Up Reminder"
+			{
+				type =  schedule
+				form = follow_up_reminder
+					status = inactive
+				start = follow_up_window_end at "10:00:00"
+				time zone = "Asia/Kolkata"
+				on start
+				{
+					actions 
+					{
+					on load
+					(
+						// Fetch the follow-up reminder record using the input context
+										followUpRecord = follow_up_reminder[ID == input.ID];
+										// Check if the follow-up window end date is today or earlier
+										if(followUpRecord.follow_up_window_end <= zoho.currentdate)
+										{
+											// Fetch the patient profile using the multi-select lookup
+											patientRecords = patient_profile[ID in followUpRecord.patient.ID.getall()];
+											// Iterate through each patient record
+											for each  patient in patientRecords
+											{
+												// Construct the email subject
+												subject = "Weekly Follow-Up Reminder";
+												// Construct the email message with patient details
+												patientName = input.patient.patient_name.first_name.concat(" ").concat(input.patient.patient_name.last_name);
+												message = "Dear " + patientName + ",\n\nThis is a weekly follow-up reminder regarding your appointment.\n\nPlease contact us if you have any questions or concerns.";
+												// Send the email notification to the patient
+												sendmail
+												[
+													from :zoho.loginuserid
+													to :input.patient.email_address
+													subject :subject
+													message :message
+												]
+											}
+										}
+					)
+					}
+				}
+			}
+		}
+
+
+		blueprint
+		{
+    			appointment_approval_workflow as "Appointment Approval Workflow"
+    			{
+        			type = Blueprint
+        			form = appointment_booking
+        			start
+        			{
+            			start stage = "Appointment Draft"
+        			}
+        			stages
+        			{
+           			"Appointment Draft"
+           			{
+           			}
+           			"Appointment Submitted"
+           			{
+           			}
+           			"Pending Doctor Approval"
+           			{
+           			}
+           			"Appointment Cancelled"
+           			{
+           			}
+           			"Appointment Approved"
+           			{
+           			}
+           			"Appointment Rejected"
+           			{
+           			}
+           			"Appointment Rescheduled"
+           			{
+           			}
+           			"Payment Pending"
+           			{
+           			}
+           			"Payment Confirmed"
+           			{
+           			}
+           			"Appointment Scheduled"
+           			{
+           			}
+           			"Patient Checked In"
+           			{
+           			}
+           			"Consultation In Progress"
+           			{
+           			}
+           			"Consultation Completed"
+           			{
+           			}
+           			"Appointment Closed"
+           			{
+           			}
+        			}
+        			transitions
+        			{
+    				approve_appointment as "Approve Appointment"
+    				{
+         				type = normal
+         				from stage = "Pending Doctor Approval"
+         				to stage = "Appointment Approved"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				cancel_appointment as "Cancel Appointment"
+    				{
+         				type = normal
+         				from stage = "Appointment Submitted"
+         				to stage = "Appointment Cancelled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				close_appointment as "Close Appointment"
+    				{
+         				type = normal
+         				from stage = "Consultation Completed"
+         				to stage = "Appointment Closed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				complete_consultation as "Complete Consultation"
+    				{
+         				type = normal
+         				from stage = "Consultation In Progress"
+         				to stage = "Consultation Completed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				confirm_new_date as "Confirm New Date"
+    				{
+         				type = normal
+         				from stage = "Appointment Rescheduled"
+         				to stage = "Appointment Scheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				confirm_payment as "Confirm Payment Received"
+    				{
+         				type = normal
+         				from stage = "Payment Pending"
+         				to stage = "Payment Confirmed"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				finalize_cancellation as "Finalize Cancellation"
+    				{
+         				type = normal
+         				from stage = "Appointment Rejected"
+         				to stage = "Appointment Cancelled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				finalize_schedule as "Finalize Appointment Schedule"
+    				{
+         				type = normal
+         				from stage = "Payment Confirmed"
+         				to stage = "Appointment Scheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				forward_to_doctor as "Forward to Doctor for Review"
+    				{
+         				type = normal
+         				from stage = "Appointment Submitted"
+         				to stage = "Pending Doctor Approval"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				initiate_payment as "Initiate Payment Request"
+    				{
+         				type = normal
+         				from stage = "Appointment Approved"
+         				to stage = "Payment Pending"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				postpone_consultation as "Postpone Consultation"
+    				{
+         				type = normal
+         				from stage = "Consultation In Progress"
+         				to stage = "Appointment Scheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				record_check_in as "Record Patient Check-In"
+    				{
+         				type = normal
+         				from stage = "Appointment Scheduled"
+         				to stage = "Patient Checked In"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				reject_appointment as "Reject Appointment"
+    				{
+         				type = normal
+         				from stage = "Pending Doctor Approval"
+         				to stage = "Appointment Rejected"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				request_reschedule as "Request Reschedule"
+    				{
+         				type = normal
+         				from stage = "Pending Doctor Approval"
+         				to stage = "Appointment Rescheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				reschedule_appointment as "Reschedule Appointment"
+    				{
+         				type = normal
+         				from stage = "Appointment Scheduled"
+         				to stage = "Appointment Rescheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				revert_to_pending as "Revert to Pending Approval"
+    				{
+         				type = normal
+         				from stage = "Payment Pending"
+         				to stage = "Pending Doctor Approval"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				schedule_followup as "Schedule Follow-up"
+    				{
+         				type = normal
+         				from stage = "Consultation Completed"
+         				to stage = "Appointment Scheduled"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				start_consultation as "Start Consultation"
+    				{
+         				type = normal
+         				from stage = "Patient Checked In"
+         				to stage = "Consultation In Progress"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+    				submit_appointment as "Submit Appointment Request"
+    				{
+         				type = normal
+         				from stage = "Appointment Draft"
+         				to stage = "Appointment Submitted"
+         				before
+         				{
+         				}
+         				after
+         				{
+         				}
+  				}
+        			}
+    			}
+		}
+
+
+	}
+	share_settings
+	{
+			"Clinic Administrator"
+			{
+				name = "Clinic Administrator"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Oversee daily clinic operations and manage department load charts to ensure optimal resource allocation. \n"
+				ModulePermissions
+				{
+					patient_profile
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							patient_profile_by_gender={"View","Edit","Delete"}
+							patient_profile_Report={"View","Edit","Delete"}
+						}
+					}
+					medical_report_viewer
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							medical_report_viewer_Report={"View","Edit","Delete"}
+							medical_report_viewer_by_report_type={"View","Edit","Delete"}
+						}
+					}
+					clinic_guidelines_snippet
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							clinic_guidelines_snippet_Report={"View","Edit","Delete"}
+						}
+					}
+					payment_transaction
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							payment_transaction_by_payment_gateway_status={"View","Edit","Delete"}
+							payment_transaction_Report={"View","Edit","Delete"}
+						}
+					}
+					doctor_availability_log
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							doctor_availability_log_Report={"View","Edit","Delete"}
+						}
+					}
+					visit_summary_log
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							visit_summary_log_Report={"View","Edit","Delete"}
+						}
+					}
+					follow_up_reminder
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							follow_up_reminder_by_reminder_type={"View","Edit","Delete"}
+							follow_up_reminder_Report={"View","Edit","Delete"}
+						}
+					}
+					daily_target_log
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							daily_target_log_Report={"View","Edit","Delete"}
+						}
+					}
+					appointment_booking
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							appointment_booking_by_department={"View","Edit","Delete"}
+							appointment_booking_Report={"View","Edit","Delete"}
+						}
+					}
+					approval_request
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							approval_request_by_approval_status={"View","Edit","Delete"}
+							approval_request_Report={"View","Edit","Delete"}
+						}
+					}
+					patient_residential_map
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							patient_residential_map_by_department={"View","Edit","Delete"}
+							patient_residential_map_Report={"View","Edit","Delete"}
+						}
+					}
+					department_load_chart
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							department_load_chart_by_department={"View","Edit","Delete"}
+							department_load_chart_Report={"View","Edit","Delete"}
+						}
+					}
+					doctor_master
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							doctor_master_Report={"View","Edit","Delete"}
+							doctor_master_by_department={"View","Edit","Delete"}
+						}
+					}
+				}
+			}
+			"Read"
+			{
+				name = "Read"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have read permission for all components\n"
+			}
+			"Write"
+			{
+				name = "Write"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have write permission for all components\n"
+			}
+			"Administrator"
+			{
+				name = "Administrator"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have all the permissions.\n"
+			}
+			"Medical Doctor"
+			{
+				name = "Medical Doctor"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Review patient profiles, symptoms, and previous medical reports before confirming or rejecting appointment requests. \n"
+				ModulePermissions
+				{
+					patient_profile
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							patient_profile_by_gender={"View","Edit","Delete"}
+							patient_profile_Report={"View","Edit","Delete"}
+						}
+					}
+					medical_report_viewer
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							medical_report_viewer_Report={"View","Edit","Delete"}
+							medical_report_viewer_by_report_type={"View","Edit","Delete"}
+						}
+					}
+					approval_request
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							approval_request_by_approval_status={"View","Edit","Delete"}
+							approval_request_Report={"View","Edit","Delete"}
+						}
+					}
+					doctor_availability_log
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							doctor_availability_log_Report={"View","Edit","Delete"}
+						}
+					}
+					visit_summary_log
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							visit_summary_log_Report={"View","Edit","Delete"}
+						}
+					}
+					follow_up_reminder
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							follow_up_reminder_by_reminder_type={"View","Edit","Delete"}
+							follow_up_reminder_Report={"View","Edit","Delete"}
+						}
+					}
+					appointment_booking
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							appointment_booking_by_department={"View","Edit","Delete"}
+							appointment_booking_Report={"View","Edit","Delete"}
+						}
+					}
+					doctor_master
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							doctor_master_Report={"View","Edit","Delete"}
+							doctor_master_by_department={"View","Edit","Delete"}
+						}
+					}
+				}
+			}
+			"Developer"
+			{
+				name = "Developer"
+				type = Developer
+				permissions = {Chat:false, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Developer Profile\n"
+			}
+			"Billing Specialist"
+			{
+				name = "Billing Specialist"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Calculate net payable fees based on consultation costs and insurance coverage percentages. \n"
+				ModulePermissions
+				{
+					visit_summary_log
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							visit_summary_log_Report={"View","Edit","Delete"}
+						}
+					}
+					follow_up_reminder
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							follow_up_reminder_by_reminder_type={"View","Edit","Delete"}
+							follow_up_reminder_Report={"View","Edit","Delete"}
+						}
+					}
+					approval_request
+					{
+						enabled= Viewall 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							approval_request_by_approval_status={"View"}
+							approval_request_Report={"View"}
+						}
+					}
+					payment_transaction
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							payment_transaction_by_payment_gateway_status={"View","Edit","Delete"}
+							payment_transaction_Report={"View","Edit","Delete"}
+						}
+					}
+				}
+			}
+			"Front Desk Coordinator"
+			{
+				name = "Front Desk Coordinator"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Verify patient check-in status and manage the flow of patients from arrival to consultation. \n"
+				ModulePermissions
+				{
+					accompanying_family_member
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							accompanying_family_member_Report={"View","Edit","Delete"}
+						}
+					}
+					patient_profile
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							patient_profile_by_gender={"View","Edit","Delete"}
+							patient_profile_Report={"View","Edit","Delete"}
+						}
+					}
+					medical_report_viewer
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							medical_report_viewer_Report={"View","Edit","Delete"}
+							medical_report_viewer_by_report_type={"View","Edit","Delete"}
+						}
+					}
+					payment_transaction
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							payment_transaction_by_payment_gateway_status={"View","Edit","Delete"}
+							payment_transaction_Report={"View","Edit","Delete"}
+						}
+					}
+					visit_summary_log
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							visit_summary_log_Report={"View","Edit","Delete"}
+						}
+					}
+					follow_up_reminder
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							follow_up_reminder_by_reminder_type={"View","Edit","Delete"}
+							follow_up_reminder_Report={"View","Edit","Delete"}
+						}
+					}
+					appointment_booking
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							appointment_booking_by_department={"View","Edit","Delete"}
+							appointment_booking_Report={"View","Edit","Delete"}
+						}
+					}
+				}
+			}
+			"Family Member"
+			{
+				name = "Family Member"
+				type = Customer_Portal
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Register as an accompanying family member for a specific patient appointment to provide support. \n"
+				ModulePermissions
+				{
+					accompanying_family_member
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							accompanying_family_member_Report={"View","Edit","Delete"}
+						}
+					}
+					patient_profile
+					{
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							patient_profile_by_gender={"View"}
+							patient_profile_Report={"View"}
+						}
+					}
+					appointment_booking
+					{
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							appointment_booking_by_department={"View"}
+							appointment_booking_Report={"View"}
+						}
+					}
+				}
+			}
+			"Patient"
+			{
+				name = "Patient"
+				type = Customer_Portal
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Create and manage personal profiles including existing conditions and consent for treatment. \n"
+				ModulePermissions
+				{
+					visit_summary_log
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							visit_summary_log_Report={"View","Edit","Delete"}
+						}
+					}
+					patient_profile
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							patient_profile_by_gender={"View","Edit","Delete"}
+							patient_profile_Report={"View","Edit","Delete"}
+						}
+					}
+					follow_up_reminder
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							follow_up_reminder_by_reminder_type={"View","Edit","Delete"}
+							follow_up_reminder_Report={"View","Edit","Delete"}
+						}
+					}
+					appointment_booking
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							appointment_booking_by_department={"View","Edit","Delete"}
+							appointment_booking_Report={"View","Edit","Delete"}
+						}
+					}
+					payment_transaction
+					{
+						enabled= Create,Viewall,Modifyall,Import,Export,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							payment_transaction_by_payment_gateway_status={"View","Edit","Delete"}
+							payment_transaction_Report={"View","Edit","Delete"}
+						}
+					}
+				}
+			}
+			"Customer"
+			{
+				name = "Customer"
+				type = Customer_Portal
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This is the default profile having only add and view permission.\n"
+			}
+			roles
+			{
+				"CEO"
+				{
+					description = "User belonging to this role can access data of all other users."
+				}
+			}
+	}
+
+
+	web
+	{
+		forms
+		{
+			form accompanying_family_member
+			{
+				label placement = left
+			}
+			form appointment_booking
+			{
+				label placement = left
+			}
+			form approval_request
+			{
+				label placement = left
+			}
+			form clinic_guidelines_snippet
+			{
+				label placement = left
+			}
+			form daily_target_log
+			{
+				label placement = left
+			}
+			form department_load_chart
+			{
+				label placement = left
+			}
+			form doctor_availability_log
+			{
+				label placement = left
+			}
+			form doctor_master
+			{
+				label placement = left
+			}
+			form follow_up_reminder
+			{
+				label placement = left
+			}
+			form medical_report_viewer
+			{
+				label placement = left
+			}
+			form patient_profile
+			{
+				label placement = left
+			}
+			form patient_residential_map
+			{
+				label placement = left
+			}
+			form payment_transaction
+			{
+				label placement = left
+			}
+			form visit_summary_log
+			{
+				label placement = left
+			}
+		}
+		reports
+		{
+			report appointment_booking_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								patient as "Patient"
+								preferred_appointment_date as "Preferred Appointment Date"
+								preferred_appointment_time as "Preferred Appointment Time"
+								department as "Department"
+								appointment_id as "Appointment ID"
+								appointment_submitted_on as "Appointment Submitted On"
+								appointment_status as "Appointment Status"
+								payment_status as "Payment Status"
+								net_payable_fee as "Net Payable Fee"
+								consultation_fee as "Consultation Fee"
+								insurance_coverage_percent as "Insurance Coverage Percent"
+								requires_ambulance_pickup as "Requires Ambulance Pickup"
+								doctor as "Doctor"
+								check_in_status as "Check-In Status"
+								consultation_status as "Consultation Status"
+								previous_report_portal_url as "Previous Report Portal URL"
+								previous_medical_report_upload as "Previous Medical Report Upload"
+								symptom_voice_note as "Symptom Voice Note"
+								symptom_video as "Symptom Video"
+								patient_photo as "Patient Photo"
+								patient_digital_signature as "Patient Digital Signature"
+								appointment_qr_code as "Appointment QR Code"
+								clinic_guidelines_display as "Clinic Guidelines Display"
+								body_temperature_f as "Body Temperature F"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								patient as "Patient"
+								preferred_appointment_date as "Preferred Appointment Date"
+								preferred_appointment_time as "Preferred Appointment Time"
+								department as "Department"
+								appointment_id as "Appointment ID"
+								appointment_submitted_on as "Appointment Submitted On"
+								appointment_status as "Appointment Status"
+								payment_status as "Payment Status"
+								net_payable_fee as "Net Payable Fee"
+								consultation_fee as "Consultation Fee"
+								insurance_coverage_percent as "Insurance Coverage Percent"
+								requires_ambulance_pickup as "Requires Ambulance Pickup"
+								doctor as "Doctor"
+								check_in_status as "Check-In Status"
+								consultation_status as "Consultation Status"
+								previous_report_portal_url as "Previous Report Portal URL"
+								previous_medical_report_upload as "Previous Medical Report Upload"
+								symptom_voice_note as "Symptom Voice Note"
+								symptom_video as "Symptom Video"
+								patient_photo as "Patient Photo"
+								patient_digital_signature as "Patient Digital Signature"
+								appointment_qr_code as "Appointment QR Code"
+								clinic_guidelines_display as "Clinic Guidelines Display"
+								body_temperature_f as "Body Temperature F"
+							)
+						)
+						datablock2
+						(
+		     				title = "Doctor"
+		     				related field = doctor
+							fields
+							(
+								doctor_name as "Doctor Name"
+								specialization as "Specialization"
+								available_slots as "Available Slots"
+								department as "Department"
+							)
+						)
+						datablock3
+						(
+		     				title = "Patient"
+		     				related field = patient
+							fields
+							(
+								patient_name as "Patient Name"
+								email_address as "Email Address"
+								contact_number as "Contact Number"
+								residential_address as "Residential Address"
+								age as "Age"
+								gender as "Gender"
+								referred_by as "Referred By"
+								existing_conditions as "Existing Conditions"
+								symptoms_description as "Symptoms Description"
+								consent_for_treatment as "Consent For Treatment"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report appointment_booking_by_department
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								patient as "Patient"
+								preferred_appointment_date as "Preferred Appointment Date"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								patient as "Patient"
+								preferred_appointment_date as "Preferred Appointment Date"
+								preferred_appointment_time as "Preferred Appointment Time"
+								department as "Department"
+								appointment_id as "Appointment ID"
+								appointment_submitted_on as "Appointment Submitted On"
+								appointment_status as "Appointment Status"
+								payment_status as "Payment Status"
+								net_payable_fee as "Net Payable Fee"
+								consultation_fee as "Consultation Fee"
+								insurance_coverage_percent as "Insurance Coverage Percent"
+								requires_ambulance_pickup as "Requires Ambulance Pickup"
+								doctor as "Doctor"
+								check_in_status as "Check-In Status"
+								consultation_status as "Consultation Status"
+								previous_report_portal_url as "Previous Report Portal URL"
+								previous_medical_report_upload as "Previous Medical Report Upload"
+								symptom_voice_note as "Symptom Voice Note"
+								symptom_video as "Symptom Video"
+								patient_photo as "Patient Photo"
+								patient_digital_signature as "Patient Digital Signature"
+								appointment_qr_code as "Appointment QR Code"
+								clinic_guidelines_display as "Clinic Guidelines Display"
+								body_temperature_f as "Body Temperature F"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report approval_request_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								appointment as "Appointment"
+								approver as "Approver"
+								approval_status as "Approval Status"
+								approval_comment as "Approval Comment"
+								approved_on as "Approved On"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								appointment as "Appointment"
+								approver as "Approver"
+								approval_status as "Approval Status"
+								approval_comment as "Approval Comment"
+								approved_on as "Approved On"
+							)
+						)
+						datablock2
+						(
+		     				title = "Approver"
+		     				related field = approver
+							fields
+							(
+								doctor_name as "Doctor Name"
+								specialization as "Specialization"
+								available_slots as "Available Slots"
+								department as "Department"
+							)
+						)
+						datablock3
+						(
+		     				title = "Appointment"
+		     				related field = appointment
+							fields
+							(
+								patient as "Patient"
+								preferred_appointment_date as "Preferred Appointment Date"
+								preferred_appointment_time as "Preferred Appointment Time"
+								department as "Department"
+								appointment_id as "Appointment ID"
+								appointment_submitted_on as "Appointment Submitted On"
+								appointment_status as "Appointment Status"
+								payment_status as "Payment Status"
+								net_payable_fee as "Net Payable Fee"
+								consultation_fee as "Consultation Fee"
+								insurance_coverage_percent as "Insurance Coverage Percent"
+								requires_ambulance_pickup as "Requires Ambulance Pickup"
+								doctor as "Doctor"
+								check_in_status as "Check-In Status"
+								consultation_status as "Consultation Status"
+								previous_report_portal_url as "Previous Report Portal URL"
+								previous_medical_report_upload as "Previous Medical Report Upload"
+								symptom_voice_note as "Symptom Voice Note"
+								symptom_video as "Symptom Video"
+								patient_photo as "Patient Photo"
+								patient_digital_signature as "Patient Digital Signature"
+								appointment_qr_code as "Appointment QR Code"
+								clinic_guidelines_display as "Clinic Guidelines Display"
+								body_temperature_f as "Body Temperature F"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report approval_request_by_approval_status
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								appointment as "Appointment"
+								approver as "Approver"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								appointment as "Appointment"
+								approver as "Approver"
+								approval_status as "Approval Status"
+								approval_comment as "Approval Comment"
+								approved_on as "Approved On"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report accompanying_family_member_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								appointment as "Appointment"
+								member_name as "Member Name"
+								relation as "Relation"
+								age as "Age"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								appointment as "Appointment"
+								member_name as "Member Name"
+								relation as "Relation"
+								age as "Age"
+							)
+						)
+						datablock2
+						(
+		     				title = "Appointment"
+		     				related field = appointment
+							fields
+							(
+								patient as "Patient"
+								preferred_appointment_date as "Preferred Appointment Date"
+								preferred_appointment_time as "Preferred Appointment Time"
+								department as "Department"
+								appointment_id as "Appointment ID"
+								appointment_submitted_on as "Appointment Submitted On"
+								appointment_status as "Appointment Status"
+								payment_status as "Payment Status"
+								net_payable_fee as "Net Payable Fee"
+								consultation_fee as "Consultation Fee"
+								insurance_coverage_percent as "Insurance Coverage Percent"
+								requires_ambulance_pickup as "Requires Ambulance Pickup"
+								doctor as "Doctor"
+								check_in_status as "Check-In Status"
+								consultation_status as "Consultation Status"
+								previous_report_portal_url as "Previous Report Portal URL"
+								previous_medical_report_upload as "Previous Medical Report Upload"
+								symptom_voice_note as "Symptom Voice Note"
+								symptom_video as "Symptom Video"
+								patient_photo as "Patient Photo"
+								patient_digital_signature as "Patient Digital Signature"
+								appointment_qr_code as "Appointment QR Code"
+								clinic_guidelines_display as "Clinic Guidelines Display"
+								body_temperature_f as "Body Temperature F"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report payment_transaction_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								appointment as "Appointment"
+								transaction_reference as "Transaction Reference"
+								payment_gateway_status as "Payment Gateway Status"
+								retry_count as "Retry Count"
+								transaction_date as "Transaction Date"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								appointment as "Appointment"
+								transaction_reference as "Transaction Reference"
+								payment_gateway_status as "Payment Gateway Status"
+								retry_count as "Retry Count"
+								transaction_date as "Transaction Date"
+							)
+						)
+						datablock2
+						(
+		     				title = "Appointment"
+		     				related field = appointment
+							fields
+							(
+								patient as "Patient"
+								preferred_appointment_date as "Preferred Appointment Date"
+								preferred_appointment_time as "Preferred Appointment Time"
+								department as "Department"
+								appointment_id as "Appointment ID"
+								appointment_submitted_on as "Appointment Submitted On"
+								appointment_status as "Appointment Status"
+								payment_status as "Payment Status"
+								net_payable_fee as "Net Payable Fee"
+								consultation_fee as "Consultation Fee"
+								insurance_coverage_percent as "Insurance Coverage Percent"
+								requires_ambulance_pickup as "Requires Ambulance Pickup"
+								doctor as "Doctor"
+								check_in_status as "Check-In Status"
+								consultation_status as "Consultation Status"
+								previous_report_portal_url as "Previous Report Portal URL"
+								previous_medical_report_upload as "Previous Medical Report Upload"
+								symptom_voice_note as "Symptom Voice Note"
+								symptom_video as "Symptom Video"
+								patient_photo as "Patient Photo"
+								patient_digital_signature as "Patient Digital Signature"
+								appointment_qr_code as "Appointment QR Code"
+								clinic_guidelines_display as "Clinic Guidelines Display"
+								body_temperature_f as "Body Temperature F"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report payment_transaction_by_payment_gateway_status
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								transaction_reference as "Transaction Reference"
+								appointment as "Appointment"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								appointment as "Appointment"
+								transaction_reference as "Transaction Reference"
+								payment_gateway_status as "Payment Gateway Status"
+								retry_count as "Retry Count"
+								transaction_date as "Transaction Date"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report follow_up_reminder_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								patient as "Patient"
+								reminder_sent_on as "Reminder Sent On"
+								follow_up_window_end as "Follow Up Window End"
+								reminder_type as "Reminder Type"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								patient as "Patient"
+								reminder_sent_on as "Reminder Sent On"
+								follow_up_window_end as "Follow Up Window End"
+								reminder_type as "Reminder Type"
+							)
+						)
+						datablock2
+						(
+		     				title = "Patient"
+		     				related field = patient
+							fields
+							(
+								patient_name as "Patient Name"
+								email_address as "Email Address"
+								contact_number as "Contact Number"
+								residential_address as "Residential Address"
+								age as "Age"
+								gender as "Gender"
+								referred_by as "Referred By"
+								existing_conditions as "Existing Conditions"
+								symptoms_description as "Symptoms Description"
+								consent_for_treatment as "Consent For Treatment"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report follow_up_reminder_by_reminder_type
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								patient as "Patient"
+								reminder_sent_on as "Reminder Sent On"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								patient as "Patient"
+								reminder_sent_on as "Reminder Sent On"
+								follow_up_window_end as "Follow Up Window End"
+								reminder_type as "Reminder Type"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report patient_residential_map_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								patient as "Patient"
+								residential_address as "Residential Address"
+								department as "Department"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								patient as "Patient"
+								residential_address as "Residential Address"
+								department as "Department"
+							)
+						)
+						datablock2
+						(
+		     				title = "Patient"
+		     				related field = patient
+							fields
+							(
+								patient_name as "Patient Name"
+								email_address as "Email Address"
+								contact_number as "Contact Number"
+								residential_address as "Residential Address"
+								age as "Age"
+								gender as "Gender"
+								referred_by as "Referred By"
+								existing_conditions as "Existing Conditions"
+								symptoms_description as "Symptoms Description"
+								consent_for_treatment as "Consent For Treatment"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report patient_residential_map_by_department
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								patient as "Patient"
+								residential_address as "Residential Address"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								patient as "Patient"
+								residential_address as "Residential Address"
+								department as "Department"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report visit_summary_log_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								appointment as "Appointment"
+								summary_generated_on as "Summary Generated On"
+								summary_content as "Summary Content"
+								sent_to_patient as "Sent To Patient"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								appointment as "Appointment"
+								summary_generated_on as "Summary Generated On"
+								summary_content as "Summary Content"
+								sent_to_patient as "Sent To Patient"
+							)
+						)
+						datablock2
+						(
+		     				title = "Appointment"
+		     				related field = appointment
+							fields
+							(
+								patient as "Patient"
+								preferred_appointment_date as "Preferred Appointment Date"
+								preferred_appointment_time as "Preferred Appointment Time"
+								department as "Department"
+								appointment_id as "Appointment ID"
+								appointment_submitted_on as "Appointment Submitted On"
+								appointment_status as "Appointment Status"
+								payment_status as "Payment Status"
+								net_payable_fee as "Net Payable Fee"
+								consultation_fee as "Consultation Fee"
+								insurance_coverage_percent as "Insurance Coverage Percent"
+								requires_ambulance_pickup as "Requires Ambulance Pickup"
+								doctor as "Doctor"
+								check_in_status as "Check-In Status"
+								consultation_status as "Consultation Status"
+								previous_report_portal_url as "Previous Report Portal URL"
+								previous_medical_report_upload as "Previous Medical Report Upload"
+								symptom_voice_note as "Symptom Voice Note"
+								symptom_video as "Symptom Video"
+								patient_photo as "Patient Photo"
+								patient_digital_signature as "Patient Digital Signature"
+								appointment_qr_code as "Appointment QR Code"
+								clinic_guidelines_display as "Clinic Guidelines Display"
+								body_temperature_f as "Body Temperature F"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report doctor_master_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								doctor_name as "Doctor Name"
+								specialization as "Specialization"
+								available_slots as "Available Slots"
+								department as "Department"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								doctor_name as "Doctor Name"
+								specialization as "Specialization"
+								available_slots as "Available Slots"
+								department as "Department"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report doctor_master_by_department
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								doctor_name as "Doctor Name"
+								specialization as "Specialization"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								doctor_name as "Doctor Name"
+								specialization as "Specialization"
+								available_slots as "Available Slots"
+								department as "Department"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report patient_profile_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								patient_name as "Patient Name"
+								email_address as "Email Address"
+								contact_number as "Contact Number"
+								residential_address as "Residential Address"
+								age as "Age"
+								gender as "Gender"
+								referred_by as "Referred By"
+								existing_conditions as "Existing Conditions"
+								symptoms_description as "Symptoms Description"
+								consent_for_treatment as "Consent For Treatment"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								patient_name as "Patient Name"
+								email_address as "Email Address"
+								contact_number as "Contact Number"
+								residential_address as "Residential Address"
+								age as "Age"
+								gender as "Gender"
+								referred_by as "Referred By"
+								existing_conditions as "Existing Conditions"
+								symptoms_description as "Symptoms Description"
+								consent_for_treatment as "Consent For Treatment"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report patient_profile_by_gender
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								patient_name as "Patient Name"
+								referred_by as "Referred By"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								patient_name as "Patient Name"
+								email_address as "Email Address"
+								contact_number as "Contact Number"
+								residential_address as "Residential Address"
+								age as "Age"
+								gender as "Gender"
+								referred_by as "Referred By"
+								existing_conditions as "Existing Conditions"
+								symptoms_description as "Symptoms Description"
+								consent_for_treatment as "Consent For Treatment"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report department_load_chart_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								department as "Department"
+								date_1 as "Date"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								department as "Department"
+								date_1 as "Date"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report department_load_chart_by_department
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								date_1 as "Date"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								department as "Department"
+								date_1 as "Date"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report daily_target_log_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								date_1 as "Date"
+								actual_count as "Actual Count"
+								capacity_percentage as "Capacity Percentage"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								date_1 as "Date"
+								actual_count as "Actual Count"
+								capacity_percentage as "Capacity Percentage"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report doctor_availability_log_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								doctor as "Doctor"
+								date_1 as "Date"
+								time_slot as "Time Slot"
+								is_available as "Is Available"
+								current_queue_count as "Current Queue Count"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								doctor as "Doctor"
+								date_1 as "Date"
+								time_slot as "Time Slot"
+								is_available as "Is Available"
+								current_queue_count as "Current Queue Count"
+							)
+						)
+						datablock2
+						(
+		     				title = "Doctor"
+		     				related field = doctor
+							fields
+							(
+								doctor_name as "Doctor Name"
+								specialization as "Specialization"
+								available_slots as "Available Slots"
+								department as "Department"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report clinic_guidelines_snippet_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								guideline_text as "Guideline Text"
+								last_updated as "Last Updated"
+								version as "Version"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								guideline_text as "Guideline Text"
+								last_updated as "Last Updated"
+								version as "Version"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report medical_report_viewer_Report
+			{
+				quickview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								appointment as "Appointment"
+								report_file_name as "Report File Name"
+								report_upload_date as "Report Upload Date"
+								report_type as "Report Type"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+		     				title = "Overview"
+							fields
+							(
+								appointment as "Appointment"
+								report_file_name as "Report File Name"
+								report_upload_date as "Report Upload Date"
+								report_type as "Report Type"
+							)
+						)
+						datablock2
+						(
+		     				title = "Appointment"
+		     				related field = appointment
+							fields
+							(
+								patient as "Patient"
+								preferred_appointment_date as "Preferred Appointment Date"
+								preferred_appointment_time as "Preferred Appointment Time"
+								department as "Department"
+								appointment_id as "Appointment ID"
+								appointment_submitted_on as "Appointment Submitted On"
+								appointment_status as "Appointment Status"
+								payment_status as "Payment Status"
+								net_payable_fee as "Net Payable Fee"
+								consultation_fee as "Consultation Fee"
+								insurance_coverage_percent as "Insurance Coverage Percent"
+								requires_ambulance_pickup as "Requires Ambulance Pickup"
+								doctor as "Doctor"
+								check_in_status as "Check-In Status"
+								consultation_status as "Consultation Status"
+								previous_report_portal_url as "Previous Report Portal URL"
+								previous_medical_report_upload as "Previous Medical Report Upload"
+								symptom_voice_note as "Symptom Voice Note"
+								symptom_video as "Symptom Video"
+								patient_photo as "Patient Photo"
+								patient_digital_signature as "Patient Digital Signature"
+								appointment_qr_code as "Appointment QR Code"
+								clinic_guidelines_display as "Clinic Guidelines Display"
+								body_temperature_f as "Body Temperature F"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+			report medical_report_viewer_by_report_type
+			{
+				quickview
+				(
+					layout
+					(
+		 				type = 1
+						datablock1
+						(
+							layout type = 1
+							fields
+							(
+								report_file_name as "Report File Name"
+								appointment as "Appointment"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+								Add 
+								Import 
+								Export 
+							)
+						record
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+    					)
+						)
+    				action
+    				(
+						on click
+						(
+							View Record   	   
+    					)
+						on right click
+						(
+							Edit   	   
+							Duplicate   	   
+							Delete   	   
+							Print   	   
+							View Record   	   
+    					)
+     				)
+				)
+
+				detailview
+				(
+					layout
+					(
+						datablock1
+						(
+							fields
+							(
+								appointment as "Appointment"
+								report_file_name as "Report File Name"
+								report_upload_date as "Report Upload Date"
+								report_type as "Report Type"
+							)
+						)
+					)
+						menu
+						(
+							header
+							(
+								Edit 
+								Duplicate 
+								Delete 
+								Print 
+							)
+						)
+				)
+			}
+		}
+		menu
+		{
+			space Space
+			{
+				displayname = "Space"
+				icon = "objects-spaceship"
+
+				section Section_1
+				{
+					displayname = "Dashboard"
+					icon = "ui-1-dashboard-half"
+					page DashBoard
+					{
+						icon = "ui-1-dashboard-half"
+					}
+				}
+				section Section_2
+				{
+					displayname = "Appointment Booking"
+					icon = "location-appointment"
+					form  appointment_booking
+					{
+						icon = "ui-1-bold-add"
+					}
+					report appointment_booking_Report
+					{
+						icon = "location-appointment"
+					}
+					report appointment_booking_by_department
+					{
+						icon = "business-hierarchy-53"
+					}
+				}
+				section Section_3
+				{
+					displayname = "Approval Requests"
+					icon = "design-todo"
+					form  approval_request
+					{
+						icon = "ui-1-bold-add"
+					}
+					report approval_request_Report
+					{
+						icon = "travel-world"
+					}
+					report approval_request_by_approval_status
+					{
+						icon = "design-window-paragraph"
+					}
+				}
+				section Section_4
+				{
+					displayname = "Accompanying Family Members"
+					icon = "users-2-family"
+					form  accompanying_family_member
+					{
+						icon = "ui-1-bold-add"
+					}
+					report accompanying_family_member_Report
+					{
+						icon = "travel-world"
+					}
+				}
+				section Section_5
+				{
+					displayname = "Payment Transactions"
+					icon = "shopping-receipt"
+					form  payment_transaction
+					{
+						icon = "ui-1-bold-add"
+					}
+					report payment_transaction_Report
+					{
+						icon = "shopping-receipt"
+					}
+					report payment_transaction_by_payment_gateway_status
+					{
+						icon = "shopping-receipt"
+					}
+				}
+				section Section_6
+				{
+					displayname = "Follow Up Reminder"
+					icon = "users-2-woman-up"
+					form  follow_up_reminder
+					{
+						icon = "ui-1-bold-add"
+					}
+					report follow_up_reminder_Report
+					{
+						icon = "users-2-woman-up"
+					}
+					report follow_up_reminder_by_reminder_type
+					{
+						icon = "media-1-layers"
+					}
+				}
+				section Section_7
+				{
+					displayname = "Patient Residential Map"
+					icon = "tech-2-l-location"
+					form  patient_residential_map
+					{
+						icon = "ui-1-bold-add"
+					}
+					report patient_residential_map_Report
+					{
+						icon = "tech-2-l-location"
+					}
+					report patient_residential_map_by_department
+					{
+						icon = "business-hierarchy-53"
+					}
+				}
+				section Section_8
+				{
+					displayname = "Summary Logs"
+					icon = "ui-1-database"
+					form  visit_summary_log
+					{
+						icon = "ui-1-bold-add"
+					}
+					report visit_summary_log_Report
+					{
+						icon = "travel-world"
+					}
+				}
+				section Section_9
+				{
+					displayname = "Doctor Masters"
+					icon = "health-bag-49"
+					form  doctor_master
+					{
+						icon = "ui-1-bold-add"
+					}
+					report doctor_master_Report
+					{
+						icon = "shopping-mobile-touch"
+					}
+					report doctor_master_by_department
+					{
+						icon = "business-hierarchy-53"
+					}
+				}
+				section Section_10
+				{
+					displayname = "Patient Profiles"
+					icon = "users-2-contacts-44"
+					form  patient_profile
+					{
+						icon = "ui-1-bold-add"
+					}
+					report patient_profile_Report
+					{
+						icon = "travel-world"
+					}
+					report patient_profile_by_gender
+					{
+						icon = "design-2-selection"
+					}
+				}
+				section Section_11
+				{
+					displayname = "Department Load Charts"
+					icon = "shopping-pos"
+					form  department_load_chart
+					{
+						icon = "ui-1-bold-add"
+					}
+					report department_load_chart_Report
+					{
+						icon = "shopping-pos"
+					}
+					report department_load_chart_by_department
+					{
+						icon = "business-hierarchy-53"
+					}
+				}
+				section Section_12
+				{
+					displayname = "Daily Target Log"
+					icon = "business-progress"
+					form  daily_target_log
+					{
+						icon = "ui-1-bold-add"
+					}
+					report daily_target_log_Report
+					{
+						icon = "business-laptop-71"
+					}
+				}
+				section Section_13
+				{
+					displayname = "Doctor Availability Log"
+					icon = "location-pin-copy"
+					form  doctor_availability_log
+					{
+						icon = "ui-1-bold-add"
+					}
+					report doctor_availability_log_Report
+					{
+						icon = "business-laptop-71"
+					}
+				}
+				section Section_14
+				{
+					displayname = "Clinic Guidelines Snippets"
+					icon = "education-microscope"
+					form  clinic_guidelines_snippet
+					{
+						icon = "ui-1-bold-add"
+					}
+					report clinic_guidelines_snippet_Report
+					{
+						icon = "travel-world"
+					}
+				}
+				section Section_15
+				{
+					displayname = "Medical Report Viewers"
+					icon = "business-laptop-71"
+					form  medical_report_viewer
+					{
+						icon = "ui-1-bold-add"
+					}
+					report medical_report_viewer_Report
+					{
+						icon = "travel-world"
+					}
+					report medical_report_viewer_by_report_type
+					{
+						icon = "business-laptop-71"
+					}
+				}
+				section ZC_App_Preferences
+				{
+					displayname = "App Preferences"
+					icon = "design-app"
+					systemcomponent
+					{
+						type = localization
+						displayname = "Language Selection"
+						icon = "education-language"
+					}
+					systemcomponent
+					{
+						type = connection
+						displayname = "Integrations"
+						icon = "tech-2-connection"
+					}
+				}
+				section ZC_Approvals
+				{
+					displayname = "Approvals"
+					icon = "ui-2-hourglass"
+					systemcomponent
+					{
+						type = approval
+						approval status = pending
+						displayname = "Pending Tasks"
+						icon = "ui-2-hourglass"
+					}
+					systemcomponent
+					{
+						type = approval
+						approval status = completed
+						displayname = "Completed Tasks"
+						icon = "design-todo"
+					}
+				}
+				section SharedAnalytics_Section
+				{
+					type = shared_user_report_section
+					displayname = "Reports"
+					icon = "business-chart-bar-33"
+				}
+			}
+			preference
+			{
+				icon
+				{
+					style = solid
+					show = {space,section,component}
+				}
+			}
+		}
+		customize
+		{
+			new theme = 11
+			font = "poppins"
+			color options
+			{
+				color = "2"
+			}
+			logo
+			{
+				preference = "none"
+				placement = "left"
+			}
+		}
+	}
+	phone
+	{
+		customize
+		{
+			layout = twocolumn
+			font = "default"
+			style = "3"
+			color options
+			{
+				color = chryslerpurple
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	tablet
+	{
+		customize
+		{
+			layout = slidingpane
+			font = "default"
+			style = "3"
+			color options
+			{
+				color = amethyst
+			}
+			logo
+			{
+				preference = "none"
+			}
+		}
+	}
+	translation
+{
+{"Language_Settings":{"LANGAGUE_WITH_LOGIN":"browser"}}
+}
+}
